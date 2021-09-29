@@ -6,6 +6,28 @@
         - SELECT 절에 단일행 함수와 그룹 함수를 함께 사용하지 못한다. (결과 행의 개수가 다르기 때문)
         - 함수를 기술할 수 있는 위치는 SELECT, WHERE, ORDER BY, GROUP BY, HAVING 절에 기술할 수 있다.
 */
+-- <  목  차  > --
+-- 1. 문자 관련된 함수
+--( LENGTH, LENGTHB , INSTR, LPAD, RPAD, LTRIM / RTRIM, TRIM, SUBSTR,LOWER / UPPER / INITCAP,CONCAT,REPLACE)
+-- 2. 숫자 관련된 함수
+--( ABS, MOD, ROUND, CEIL, FLOOR, TRUNC)
+-- 3. 날짜 관련된 함수
+--( SYSDATE, MONTHS_BETWEEN , ADD_MONTHS , NEXT_DAY , LAST_DAY, EXTRACT )
+-- 4. 형변환 함수 
+-- ( TO_CHAR , TO_DATE , TO_NUMBER)
+-- 5. NULL처리함수
+-- ( NVL, NVL2 , NULLIF )
+-- 6. 선택함수
+-- (DECODE , CASE )
+-- 7. 그룹함수
+-- ( SUM, AVG , MIN/MAX , COUNT )
+
+
+
+
+
+
+
 
 ---------------------------단일행 함수---------------------------
 /*
@@ -18,7 +40,7 @@
     
       * DUAL 테이블
        - sys 사용자가 소유하는 테이블
-       - sys 사용자가 소유하지만 모든 사용자에가 접근이 가능하다.
+       - sys 사용자가 소유하지만 모든 사용자에 접근이 가능하다.
        - 한 행, 한 컬럼을 가지고 있는 더미(DUMMY) 테이블이다.
        - 사용자가 함수(계산)를 사용할 때 임시로 사용하는 테이블이다.
 */
@@ -657,3 +679,5 @@ FROM EMPLOYEE;
 -- 현재 사원들이 분포되어 있는 직급의 수
 SELECT COUNT(DISTINCT JOB_CODE)
 FROM EMPLOYEE;
+
+-- 끝 -- 
