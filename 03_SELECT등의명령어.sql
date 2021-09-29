@@ -1,11 +1,25 @@
 SELECT * FROM employee;
+--EMP_ID : 사원의 번호, EMP_NAME: 사원의 이름, SALARY: 급여,JOB : 일, 
+----< 목 차 >----
+-- 1. SELECT
+-- 2. 컬럼에 별칭 정하기
+-- 3. 리터럴 : 문자열 출력하는듯한 
+-- 4. WHERE
+-- 5. 논리연산자
+-- 6. BETWEEN AND, NOT BETWEEN AND
+-- 7. LIKE
+-- 8. IS NULL / IS NOT NULL
+-- 9. IN
+-- 10. ORDER BY
+
+
 
 /* <SELECT>
     [표현법] 
         SELECT 컬럼, 컬럼, 컬럼, ..., 컬럼
             FROM 테이블명;
             
-            - 데이터를 조회할 때 사용하는 구무
+            - 데이터를 조회할 때 사용하는 구문
             - SELECT를 통해서 조회된 결과물을 RESULT SET이라고 한다.(즉, 조회된 행들의 집합)
             - 조회하고자 하는 컬럼들은 반드시 FROM 절에 기술한 테이블에 존재하는 컬럼이어야 한다.
             
@@ -51,8 +65,8 @@ SELECT EMP_NAME, EMAIL, PHONE, HIRE_DATE FROM EMPLOYEE;
 SELECT EMP_NAME, SALARY * 12
 FROM EMPLOYEE;
 
--- EMPLOYEE 테이블에서 직원명, 급여, 연봉, 보너스가 포함된 연봉((급여+(보너스*급여))*12) 조회
--- <<<산술 연산 중 NULL값이 존재할 경우>>>> :  산술 연산한 결과값은 무조건 NULL이다.
+-- EMPLOYEE 테이블에서 직원명, 연봉급여, , 보너스가 포함된 연봉((급여+(보너스*급여))*12) 조회
+-- <★<<산술 연산 중 NULL값이 존재할 경우>>>★> :  산술 연산한 결과값은 무조건 NULL이다.
 
 SELECT EMP_NAME, SALARY, SALARY * 12, (SALARY + (BONUS * SALARY)) * 12
 FROM EMPLOYEE;
@@ -60,9 +74,9 @@ FROM EMPLOYEE;
 -- EMPLOYEE 테이블에서 직원명, 입사일, 근무일수(오늘 날짜 - 입사일)
 -- DATE형식 끼리도 연산이 가능합니다.
 -- < SYSDATE > : 현재 날짜를 출력한다.
--- < CELL(NUMBER)> 매개값으로 전달되는 수를 올림하는 함수
+-- < CEiL(NUMBER)> 매개값으로 전달되는 수를 << 올림 >>하는 함수 ----------<FLOOR: 내림함수
 --
--- EMP_NAME : 직원 이름 , HIRE_DATE : 고용 날짜 , SYS~ - HIRE~ : 몇일이나 일했는지 계산..
+-- EMP_NAME : 직원 이름 , HIRE_DATE : 고용 날짜 , SYSDATE - HIREDATE : 몇일이나 일했는지 계산..
 SELECT EMP_NAME, HIRE_DATE, /*SYSDATE - HIRE_DATE : 이렇게 하면 1123.3232같이 나온다*/  CEIL(SYSDATE - HIRE_DATE)
 FROM EMPLOYEE;
 ----------------------------------------
@@ -88,7 +102,8 @@ FROM EMPLOYEE;
 -- 단위(원)
 -- 원
 -- 원
--- ... 이렇게 출력됨
+-- ... 
+-- 이렇게 출력됨
 SELECT EMP_ID, EMP_NAME, SALARY, '원' AS "단위(원)"
 FROM EMPLOYEE;
 ------------------------------
@@ -105,13 +120,13 @@ FROM EMPLOYEE;
 SELECT DISTINCT JOB_CODE
 FROM EMPLOYEE;
 
--- DISTINCT 는 SELECT절에 <<한번>>만 기술할 수 있다.
+-- DISTINCT 는 SELECT절에 <<★한번★>>만 기술할 수 있다.
 -- SELECT DISTINCT JOB_CODE, DISTINCT DEPT _ CODE
 -- 테이블 여러개 중복제거 조회해도 DISTINCT는 한 번 만 기 술 해 도 된 다 는 뜻
 SELECT DISTINCT JOB_CODE, DEPT_CODE
 FROM EMPLOYEE;
 
-
+---------------------------------------------------------------------------------------------
 /* <WHERE 절>
         [표현법]
             SELECT 컬럼, 컬럼, 컬럼, ..., 컬럼
