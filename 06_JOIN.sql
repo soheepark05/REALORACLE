@@ -386,6 +386,14 @@ ORDER BY D.DEPT_TITLE;
 -- 오라클 구문
 
 -- ANSI 구문
+SELECT D.DEPT_TITLE AS "부서명", 
+       TO_CHAR(SUM(SALARY, 0), '99,999,999') AS "급여의 합"
+FROM EMPLOYEE E
+JOIN DEPARTMENT D ON (E.DEPT_CODE = D.DEPT_ID)
+GROUP BY D.DEPT_TITLE
+HAVING SUM(SALARY) >= 10000000;
+ORDER BY D.DEPT_TITLE;
+
 
 -- 7. 사번, 사원명, 직급명, 급여 등급, 구분을 조회 (NON EQUAL JOIN 후에 실습 진행)
 --    이때 구분에 해당하는 값은 아래와 같이 조회 되도록 하시오.
@@ -395,11 +403,28 @@ ORDER BY D.DEPT_TITLE;
 -- 오라클 구문
 
 -- ANSI 구문
+SELECT E.EMP_ID AS "사번", E.EMP_NAME AS "사원명", J.JOB_NAME AS "직급명" , S.SAL_NAME AS "급여 등급"
+    CASE
+        WHEN S.SAL_LEVEL IN ('S1','S2') THEN '고급'
+        WHEN S.SAL_LEVEL IN ('S3','S4') THEN '중급'
+        WHEN S.SAL_LEVEL IN ('S5','S6') THEN '초급'
+    END AS "구분"
+FROM EMPLOYEE E
+JOIN JOB J ON (E.JOB_CODE = J.JOB_CODE)
+JOIN SAL_GRADE S ON(E.SALARY BETWEEN S.MIN_SAL AND S.MAX_SAL);
 
 -- 8. 보너스를 받지 않는 직원들 중 직급 코드가 J4 또는 J7인 직원들의 사원명, 직급명, 급여를 조회하시오.
 -- 오라클 구문
 
 -- ANSI 구문
+SELECT E.EMP_NAME AS "사원명",
+        J.JOB_NAME AS "직급명",
+       E.SALARY AS "급여"
+FROM EMPLOYEE E
+JOIN JOB J ON(E.JOB_CODE = J.JOB_CODE)
+WHERE E.BONUS IS NULL
+    AND E.JOB_CODE IN ('J4','J7');
+    --AND (E.JOB_CODE = 'J4' OR E.JOB_CODE = 'J7');
 
 -- 9. 부서가 있는 직원들의 사원명, 직급명, 부서명, 근무 지역을 조회하시오.
 -- 오라클 구문
@@ -410,8 +435,23 @@ ORDER BY D.DEPT_TITLE;
 -- 오라클 구문
 
 -- ANSI 구문
+SELECT E.EMP_NAME, J.JOB_NAME, E.DEPT_CODE, D.DEPT_TITLE
+FROM EMPLOYEE E
+JOIN JOB J ON (E.JOB_CODE = J.JOB_CODE)
+JOIN DEPARTMENT D ON(E.DEPT_CODE = D.DEPT_ID)
+WHERE D.DEPT_TITLE LIKE '해외영업%';
+--ORDER BY E.EMP_NAME;
 
 -- 11. 이름에 '형'자가 들어있는 직원들의 사번, 사원명, 직급명을 조회하시오.
 -- 오라클 구문
 
 -- ANSI 구문
+SELECT E.EMP_ID AS "사번",
+       E.EMP_NAME AS "사원명",
+       J.JOB_NAME AS "직급명"
+
+FROM EMPLOYEE E
+JOIN JOB J ON(E.JOB_CODE = J.JOB_CODE)
+WHERE E.EMP_NAME LIKE '%형%';
+
+       
