@@ -352,7 +352,7 @@ JOIN JOB J ON (E.JOB_CODE = J.JOB_CODE)
 JOIN DEPARTMENT D ON(E.DEPT_CODE = D.DEPT_ID)
 JOIN LOCATION L ON(D.LOCATION_ID = L.LOCAL_CODE)
 WHERE J.JOB_NAME = '대리' 
-  AND L.LOCAL_NAME LIKE 'ASIA%';
+  AND L.LOCAL_NAME LIKE 'ASIA%';   --ASIA 로시작하는 글자를 찾기
 
 
 -- 2. 70년대생 이면서 여자이고, 성이 전 씨인 직원들의 사원명, 주민번호, 부서명, 직급명을 조회하세요.
