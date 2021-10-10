@@ -1,4 +1,17 @@
-<<<<<<< HEAD
+
+
+
+-- DDL 
+-- 1. CREATE 
+-- 2. <제약 조건(CONSTRAINTS)>
+-- 3. <UNIQUE 제약조건>
+-- 4. <NOT NULL 제약조건>
+-- 5. <CHECK 제약조건>
+-- 6. <PRIMARY KEY(기본 키) 제약조건>
+-- 7. <FOREIGN KEY(외래 키) 제약조건>
+-- 8. <SUBQUERY를 이용한 테이블 생성>
+-- 9. 
+
 /*
     <DDL(Data Definition Language)>
         데이터 정의 언어로 오라클에서 제공하는 객체를 만들고(CREATE), 변경하고(ALTER), 삭제하는(DROP) 등
