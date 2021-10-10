@@ -1,3 +1,8 @@
+-- ( 목   차 )
+-- 1. 테이블 생성
+-- 2. 제약조건 추가 삭제
+-- 3. <DROP>
+
 /*
     <DDL(Data Definition Language)>
         데이터 정의 언어로 오라클에서 제공하는 객체를 만들고(CREATE), 변경하고(ALTER), 삭제하는(DROP) 등
