@@ -1,3 +1,23 @@
+/*2021_1011 시험 */
+/* -------------< 목   차 >-------------
+    1. JOIN (ORACLE 과 ANSI)에서의 차이점
+    2. OUTER JOIN 외부 조인 (LEFT/RIGHT/(+))
+    3. 카테시안곱(CARTESIAN PRODUCT) / 교차 조인(CROSS JOIN)
+    4. 비등가 조인(NON EQUAL JOIN)
+    5. 자체 조인(SELF JOIN)
+    
+
+
+
+*/
+
+
+
+
+
+
+
+
 /*
     <JOIN>
         두 개 이상의 테이블에서 데이터를 조회하고자 할 때 사용되는 구문이다.
