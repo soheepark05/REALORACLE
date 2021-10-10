@@ -1,3 +1,5 @@
+
+------이번시험범위 DDL
 /*
     <DDL(Data Definition Language)>
         데이터 정의 언어로 오라클에서 제공하는 객체를 만들고(CREATE), 변경하고(ALTER), 삭제하는(DROP) 등
