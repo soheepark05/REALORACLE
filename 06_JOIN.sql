@@ -253,7 +253,7 @@ WHERE E.DEPT_CODE(+) = D.DEPT_ID(+);
 -- ANSI 구문
 SELECT EMP_NAME, DEPT_TITLE
 FROM EMPLOYEE
-CROSS JOIN DEPARTMENT
+CROSS JOIN DEPARTMENT  -- 별도의 on이 필요없다.
 ORDER BY EMP_NAME;  -- 23 * 9 => 207
 
 -- 오라클 구문
@@ -266,7 +266,7 @@ ORDER BY EMP_NAME;
         4. 비등가 조인(NON EQUAL JOIN)
             조인 조건에 등호(=)를 사용하지 않는 조인문을 비등가 조인이라고 한다.
             지정한 컬럼 값이 일치하는 경우가 아닌, 값의 범위에 포함되는 행들을 연결하는 방식이다.
-            (= 이외의 비교 연산자 >, <, >=, <=, BETWEEN AND, IN, NOT IN 등을 사용한다.)
+            (= 이외의 비교 연산자 >, <, >=, <=, BETWEEN AND, IN, NOT IN 등을 사용할 수 있다....)
             ANSI 구문으로는 JOIN ON 구문으로만 사용이 가능하다.(USING 사용 불가)
 */
 -- EMPLOYEE 테이블과 SAL_GRADE 테이블을 비등가 조인하여 사원명, 급여, 급여 등급 조회
