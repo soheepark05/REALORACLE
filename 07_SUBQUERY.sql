@@ -1,3 +1,15 @@
+--<       목      차       >
+
+-- 1. SUBQUERY 서브 쿼리
+-- 2. 다중행 서브 쿼리
+-- 3. IN / NOT IN (서브쿼리) / ANY / ALL
+-- 4. 다중열 서브 쿼리(조회 결과 값은 한 행이지만 나열된 컬럼 수가 여러 개일 때)
+-- 5. 다중행 다중열 서브 쿼리 : 서브 쿼리의 조회 결과값이 여러 행, 여러 열일 경우
+-- 6.  <인라인 뷰> :FROM 절에 서브 쿼리를 제시하고, 서브 쿼리를 수행한 결과를 테이블 대신에 사용한다.
+-- 7.  <RANK 함수> ☆
+
+
+
 /*
     <SUBQUERY>
         하나의 SQL 문 안에 포함된 또 다른 SQL 문을 뜻한다.
@@ -197,7 +209,7 @@ WHERE EMP_ID IN (
     WHERE MANAGER_ID IS NOT NULL
 )
 
-UNION
+UNION           -- 쿼리문 합치는 방법 중 하나
 
 SELECT EMP_ID, EMP_NAME, DEPT_CODE, '사원' AS "구분"
 FROM EMPLOYEE
