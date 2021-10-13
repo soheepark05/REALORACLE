@@ -5,7 +5,7 @@
     3. 카테시안곱(CARTESIAN PRODUCT) / 교차 조인(CROSS JOIN)
     4. 비등가 조인(NON EQUAL JOIN)
     5. 자체 조인(SELF JOIN)
-    
+    6. 실습 문제들!!
 
 
 

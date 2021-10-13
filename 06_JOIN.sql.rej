@@ -1,0 +1,9 @@
+diff a/06_JOIN.sql b/06_JOIN.sql	(rejected hunks)
+@@ -320,6 +320,7 @@
+ SELECT E.EMP_NAME, E.SALARY, S.SAL_LEVEL
+ FROM EMPLOYEE E
+ JOIN SAL_GRADE S ON (E.SALARY BETWEEN S.MIN_SAL AND S.MAX_SAL);    --S1의 MIN ~MAX범위에 해당하는 것을 출력하는거임
++-- ( = JOIN SAL_GRADE S ON (E.SALARY >= S.MIN_SAL AND E.SALARY <= S.MAX_SAL ) : 위에거랑 같은 결과
+ 
+ SELECT *
+ FROM sal_grade;
