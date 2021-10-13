@@ -320,6 +320,7 @@ ORDER BY EMP_NAME;
 SELECT E.EMP_NAME, E.SALARY, S.SAL_LEVEL
 FROM EMPLOYEE E
 JOIN SAL_GRADE S ON (E.SALARY BETWEEN S.MIN_SAL AND S.MAX_SAL);    --S1의 MIN ~MAX범위에 해당하는 것을 출력하는거임
+-- ( = JOIN SAL_GRADE S ON (E.SALARY >= S.MIN_SAL AND E.SALARY <= S.MAX_SAL ) : 위에거랑 같은 결과
 
 SELECT *
 FROM sal_grade;
@@ -327,17 +328,17 @@ FROM sal_grade;
 -- 오라클 구문
 SELECT E.EMP_NAME, E.SALARY, S.SAL_LEVEL
 FROM EMPLOYEE E, SAL_GRADE S
-WHERE E.SALARY BETWEEN S.MIN_SAL AND S.MAX_SAL;
+WHERE E.SALARY BETWEEN S.MIN_SAL AND S.MAX_SAL; --조건절
 
 ------------------------------------------------------------------
 /*
         5. 자체 조인(SELF JOIN)
-            같은 테이블을 다시 한번 조인하는 경우에 사용한다.
+            같은 테이블을 다시 한번 조인하는 경우에 사용한다.(자기자신과 조인을 맺는것)
 */
 SELECT EMP_ID, EMP_NAME, MANAGER_ID
 FROM EMPLOYEE;
 
--- EMPLOYEE 테이블을 SELF JOIN 하여 사번, 사원 이름, 부서 코드, 사수 사번, 사수 이름 조회
+-- EMPLOYEE 테이블을 SELF JOIN 하여 사원번호, 사원 이름, 부서 코드, 사수 사번, 사수 이름 조회
 -- ANSI 구문
 SELECT E1.EMP_ID AS "사번", 
        E1.EMP_NAME AS "사원 이름", 
@@ -356,7 +357,7 @@ SELECT E1.EMP_ID AS "사번",
 FROM EMPLOYEE E1, EMPLOYEE E2
 WHERE E1.MANAGER_ID = E2.EMP_ID(+);
 
--------------------------실습 문제-------------------------
+-------------------------실습 문제------------------------- <<<영상 : 2021.10.04_ 3교시부터>>>
 -- 1. 직급이 대리이면서 ASIA 지역에서 근무하는 직원들의 사번, 사원명, 직급명, 부서명, 근무지역, 급여를 조회하세요.
 -- 오라클 구문
 
