@@ -286,13 +286,13 @@ WHERE E.DEPT_CODE(+) = D.DEPT_ID(+);                    --두개다 (+)는 ㄴ�
 /*
         3. 카테시안곱(CARTESIAN PRODUCT) / 교차 조인(CROSS JOIN)
             조인되는 모든 테이블의 각 행들이 서로서로 모두 매핑된 데이터가 검색된다. (곱집합)
-            테이블의 행들이 모두 곱해진 행들의 조합이 출력 -> 방대한 데이터 출력 -> 과부하의 위험
+            두 테이블의 행들이 <<모두>> 곱해진 행들의 조합이 출력 -> 방대한 데이터 출력 -> ❤과부하❤의 위험
 */
 -- ANSI 구문
 SELECT EMP_NAME, DEPT_TITLE
 FROM EMPLOYEE
 CROSS JOIN DEPARTMENT  -- 별도의 on이 필요없다.
-ORDER BY EMP_NAME;  -- 23 * 9 => 207
+ORDER BY EMP_NAME;  -- 23(emp) * 9(dep) => 207
 
 ----->이름별로 DEPT_TITLE이 다 출력됨.... 1. 1-1 1-2 1-3
 
@@ -304,7 +304,7 @@ FROM DEPARTMENT;
 --------------------------------------------
 -- 오라클 구문
 SELECT EMP_NAME, DEPT_TITLE
-FROM EMPLOYEE, DEPARTMENT
+FROM EMPLOYEE, DEPARTMENT --별도의 cross join 을 사용하지 않고,,,
 ORDER BY EMP_NAME;
 
 ------------------------------------------------------------------
@@ -313,13 +313,14 @@ ORDER BY EMP_NAME;
             조인 조건에 등호(=)를 사용하지 않는 조인문을 비등가 조인이라고 한다.
             지정한 컬럼 값이 일치하는 경우가 아닌, 값의 범위에 포함되는 행들을 연결하는 방식이다.
             (= 이외의 비교 연산자 >, <, >=, <=, BETWEEN AND, IN, NOT IN 등을 사용할 수 있다....)
-            ANSI 구문으로는 JOIN ON 구문으로만 사용이 가능하다.(USING 사용 불가)
+            ANSI 구문으로는 JOIN ON 구문으로만 사용이 가능하다.(USING 사용 불가,,,유징 자체가 등가조인이기때문에..)
 */
 -- EMPLOYEE 테이블과 SAL_GRADE 테이블을 비등가 조인하여 사원명, 급여, 급여 등급 조회
 -- ANSI 구문
 SELECT E.EMP_NAME, E.SALARY, S.SAL_LEVEL
 FROM EMPLOYEE E
 JOIN SAL_GRADE S ON (E.SALARY BETWEEN S.MIN_SAL AND S.MAX_SAL);    --S1의 MIN ~MAX범위에 해당하는 것을 출력하는거임
+-- ( = JOIN SAL_GRADE S ON (E.SALARY >= S.MIN_SAL AND E.SALARY <= S.MAX_SAL ) : 위에거랑 같은 결과
 
 SELECT *
 FROM sal_grade;
@@ -327,17 +328,17 @@ FROM sal_grade;
 -- 오라클 구문
 SELECT E.EMP_NAME, E.SALARY, S.SAL_LEVEL
 FROM EMPLOYEE E, SAL_GRADE S
-WHERE E.SALARY BETWEEN S.MIN_SAL AND S.MAX_SAL;
+WHERE E.SALARY BETWEEN S.MIN_SAL AND S.MAX_SAL; --조건절
 
 ------------------------------------------------------------------
 /*
         5. 자체 조인(SELF JOIN)
-            같은 테이블을 다시 한번 조인하는 경우에 사용한다.
+            같은 테이블을 다시 한번 조인하는 경우에 사용한다.(자기자신과 조인을 맺는것)
 */
 SELECT EMP_ID, EMP_NAME, MANAGER_ID
 FROM EMPLOYEE;
 
--- EMPLOYEE 테이블을 SELF JOIN 하여 사번, 사원 이름, 부서 코드, 사수 사번, 사수 이름 조회
+-- EMPLOYEE 테이블을 SELF JOIN 하여 사원번호, 사원 이름, 부서 코드, 사수 사번, 사수 이름 조회
 -- ANSI 구문
 SELECT E1.EMP_ID AS "사번", 
        E1.EMP_NAME AS "사원 이름", 
@@ -356,7 +357,7 @@ SELECT E1.EMP_ID AS "사번",
 FROM EMPLOYEE E1, EMPLOYEE E2
 WHERE E1.MANAGER_ID = E2.EMP_ID(+);
 
--------------------------실습 문제-------------------------
+-------------------------실습 문제------------------------- <<<영상 : 2021.10.04_ 3교시부터>>>
 -- 1. 직급이 대리이면서 ASIA 지역에서 근무하는 직원들의 사번, 사원명, 직급명, 부서명, 근무지역, 급여를 조회하세요.
 -- 오라클 구문
 
