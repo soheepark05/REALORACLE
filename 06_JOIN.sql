@@ -364,12 +364,29 @@ WHERE E1.MANAGER_ID = E2.EMP_ID(+);
     부서명: DEPT_TITLE
     근무지역: LOCAL_NAME
     급여 : SALARY
+
 */
+
+    SELECT * FROM EMPLOYEE;
+    SELECT * FROM JOB;    -- JOB_NAME:대리 
+    SELECT * FROM LOCATION;   --LOCATION NAME...   D.LOCATION_ID =  L.LOCATION_ID
+    SELECT * FROM DEPARTMENT;
+
 
 -- 1번문제. 직급이 대리이면서 ASIA 지역에서 근무하는 직원들의 사번, 사원명, 직급명, 부서명, 근무지역, 급여를 조회하세요.
 -- <<오라클 구문>>
-
-
+    SELECT E.EMP_ID AS "사번",
+           E.EMP_NAME AS "사원명",
+           J.JOB_NAME AS "직급명",
+           D.DEPT_TITLE AS "부서명",
+           L.LOCAL_NAME AS "근무지역",
+           E.SALARY AS "급여"
+    FROM EMPLOYEE E , LOCATION L, JOB J, DEPARTMENT D
+    WHERE J.JOB_NAME = '대리' 
+        AND E.JOB_CODE = J.JOB_CODE
+        AND E.DEPT_CODE = D.DEPT_ID
+        AND D.LOCATION_ID = L.LOCAL_CODE
+        AND L.LOCAL_NAME LIKE 'ASIA%';
 -- <<ANSI 구문>>
 SELECT E.EMP_ID AS "사번",
        E.EMP_NAME AS "사원명", 
@@ -387,6 +404,17 @@ WHERE J.JOB_NAME = '대리'
 
 -- 2. 70년대생 이면서 여자이고, 성이 전 씨인 직원들의 사원명, 주민번호, 부서명, 직급명을 조회하세요.
 -- 오라클 구문
+SELECT E.EMP_NAME AS "사원명", 
+       E.EMP_NO AS "사원 주민 번호",
+       D.DEPT_TITLE AS "부서명",
+       J.JOB_NAME AS "직급명"
+FROM EMPLOYEE E, DEPARTMENT D, JOB J 
+WHERE E.DEPT_CODE = D.DEPT_ID 
+AND E.JOB_CODE = J.JOB_CODE
+AND E.EMP_NO LIKE '7%'
+AND SUBSTR(E.EMP_NO, 8,1) = '2' -- 주민번호 뒷자리가 2로 시작하면 여자니까.. [문법] : SUBSTR("문자열", "시작위치", "길이")
+AND E.EMP_NAME LIKE '전%';
+
 
 -- ANSI 구문
 SELECT E.EMP_NAME AS "사원명",
@@ -418,7 +446,19 @@ LEFT OUTER JOIN LOCATION L ON (D.LOCATION_ID = L.LOCAL_CODE);
 
 
 -- 4. 한국과 일본에서 근무하는 직원들의 사원명, 부서명, 근무지역, 근무 국가를 조회하세요.
--- 오라클 구문
+-- 오라클 구문 -- (?)이건왜이렇게 다 출력되지
+
+SELECT E.EMP_NAME AS "사원명", 
+       D.DEPT_TITLE AS "부서명", 
+       L.LOCAL_NAME AS "근무지역", 
+       N.NATIONAL_NAME AS "근무국가"
+       FROM EMPLOYEE E, NATIONAL N, LOCATION L, department D
+       WHERE E.DEPT_CODE = D.DEPT_ID
+       AND D.LOCATION_ID = L.LOCAL_CODE
+       AND L.NATIONAL_CODE = N.NATIONAL_CODE
+       AND N.NATIONAL_NAME = '한국' OR N.NATIONAL_NAME = '일본';
+       
+        
 
 -- ANSI 구문
 SELECT E.EMP_NAME AS "사원명", 
