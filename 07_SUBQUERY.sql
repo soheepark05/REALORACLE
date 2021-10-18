@@ -13,12 +13,12 @@
 /*
     <SUBQUERY>
         하나의 SQL 문 안에 포함된 또 다른 SQL 문을 뜻한다.
-        메인 쿼리(기존 쿼리)를 보조하는 역할을 하는 쿼리문이다.
+        메인 쿼리(기존 쿼리)를 <<보조>>하는 역할을 하는 쿼리문이다.
 */
 
 -- 서브 쿼리 예시
 -- 노옹철 사원과 같은 부서원들을 조회
--- 1) 노옹철 사원의 부서 코드 조회 --> D9
+-- 1) 노옹철 사원의 부서 코드 조회 --> 결과값 : D9
 SELECT EMP_NAME, DEPT_CODE
 FROM EMPLOYEE
 WHERE EMP_NAME = '노옹철';
@@ -26,7 +26,7 @@ WHERE EMP_NAME = '노옹철';
 -- 2) 부서 코드가 노옹철 사원의 부서 코드와 동일한 사원들을 조회
 SELECT EMP_NAME, DEPT_CODE
 FROM EMPLOYEE
-WHERE DEPT_CODE = 'D9';
+WHERE DEPT_CODE = 'D9';  --> 선동일 송중기 노옹철
 
 -- 3) 위의 2단계를 하나의 쿼리로 작성
 SELECT EMP_NAME, DEPT_CODE
@@ -36,6 +36,8 @@ WHERE DEPT_CODE = (
     FROM EMPLOYEE
     WHERE EMP_NAME = '노옹철'
 );
+
+
 
 ----------------------------------------------------------------
 /*
@@ -65,12 +67,13 @@ WHERE SALARY < (
     SELECT AVG(SALARY)
     FROM EMPLOYEE
 )
-ORDER BY SALARY;
+ORDER BY SALARY;   -- ORDER BY 는 메인쿼리에서 써라 
 
 -- 2) 최저 급여를 받는 직원의 사번, 이름, 직급 코드, 급여, 입사일 조회
 -- 최저 급여 조회
 SELECT MIN(SALARY)
 FROM EMPLOYEE; -- 결과값 1행 1열 (1380000)
+
 
 -- 위 쿼리를 서브 쿼리로 사용하는 메인 쿼리 작성
 SELECT EMP_ID, EMP_NAME, JOB_CODE, SALARY, HIRE_DATE
@@ -85,6 +88,12 @@ WHERE SALARY = (
 SELECT SALARY
 FROM EMPLOYEE
 WHERE EMP_NAME = '노옹철';
+-- OR
+SELECT SALARY FROM EMPLOYEE WHERE EMP_NAME = '노옹철';
+
+SELECT E.EMP_ID, E.EMP_NAME, D.DEPT_TITLE, E.JOB_CODE, E.SALARY
+FROM EMPLOYEE E, DEPARTMENT D
+WHERE EMP_NAME = (SELECT SALARY FROM EMPLOYEE WHERE EMP_NAME = '노옹철');
 
 -- 위 쿼리를 서브 쿼리로 사용하는 메인 쿼리 작성 (ANSI)
 SELECT E.EMP_ID, E.EMP_NAME, D.DEPT_TITLE, E.JOB_CODE, E.SALARY
@@ -175,7 +184,7 @@ ORDER BY DEPT_CODE;
 -- 사수에 해당하는 사번을 조회
 SELECT DISTINCT MANAGER_ID
 FROM EMPLOYEE
-WHERE MANAGER_ID IS NOT NULL; -- (201, 204, 100, 200, 211, 207, 214)
+WHERE MANAGER_ID IS NOT NULL; -- (사번: 201, 204, 100, 200, 211, 207, 214) --널인애들은 안보이게 하고싶다.
 
 -- 사번이 위와 같은 직원들의 사번, 이름, 부서 코드, 구분(사수) 조회
 SELECT EMP_ID, EMP_NAME, DEPT_CODE, '사수' AS "구분"
@@ -209,7 +218,7 @@ WHERE EMP_ID IN (
     WHERE MANAGER_ID IS NOT NULL
 )
 
-UNION           -- 쿼리문 합치는 방법 중 하나
+UNION           -- 쿼리문 합치는 방법 중 하나 / 집합연산자..
 
 SELECT EMP_ID, EMP_NAME, DEPT_CODE, '사원' AS "구분"
 FROM EMPLOYEE
@@ -343,7 +352,7 @@ WHERE (JOB_CODE, MANAGER_ID) = (
     FROM EMPLOYEE
     WHERE EMP_NAME = '박나라'
 );
-
+---------------------------------------------------------------------<><><>211019
 SELECT EMP_ID, EMP_NAME, JOB_CODE, MANAGER_ID
 FROM EMPLOYEE
 WHERE (JOB_CODE, MANAGER_ID) IN (
