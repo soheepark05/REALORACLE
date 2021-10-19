@@ -38,10 +38,10 @@ CREATE TABLE MEMBER (
     MEMBER_ID VARCHAR2(20),
     MEMBER_PWD VARCHAR2(20),
     MEMBER_NAME VARCHAR2(20),
-    MEMBER_DATE DATE DEFAULT SYSDATE -- 기본값을 지정할 수 있다.
+    MEMBER_DATE DATE DEFAULT SYSDATE
 );
-
--- DROP TABLE MEMBER;
+ -- DEFAULT : 기본값을 지정할 수 있다.
+-- DROP TABLE MEMBER;  --테이블을 지울수있다.
 
 -- 만든 테이블 확인
 DESC MEMBER; -- 테이블의 구조를 표시해 주는 구문이다.
@@ -80,11 +80,13 @@ SELECT * FROM MEMBER;
 
 -- 위에서 테이블에 추가한 데이터를 실제 데이터베이스에 반영한다. (메모리 버퍼에 임시 저장된 데이터를 실제 테이블에 반영)
 COMMIT;
+-- 커밋을 통해 이제 실제 테이블로 확정시켜주는것임...
 
-SHOW AUTOCOMMIT;
 
--- SET AUTOCOMMIT ON;
--- SET AUTOCOMMIT OFF;
+SHOW AUTOCOMMIT; -- 커밋안해도 인서트하면 자동 커밋되는것...
+
+-- SET AUTOCOMMIT ON; -- 이러면 자동으로 커밋된다/
+-- SET AUTOCOMMIT OFF; -- 오프됨..
 
 ------------------------------------------------------
 /*
@@ -92,7 +94,12 @@ SHOW AUTOCOMMIT;
         사용자가 원하는 조건의 데이터만 유지하기 위해서 테이블 작성 시 각 컬럼에 대해 저장될 값에 대한 제약조건을 설정할 수 있다.
         제약 조건은 데이터 무결성 보장을 목적으로 한다. (데이터의 정확성과 일관성을 유지시키는 것)
         
-        * 종류 : NOT NULL, UNIQUE, CHECK, PRIMARY KEY, FOREIGN KEY
+        * 종류 : 
+         NOT NULL: 데이터에 NULL을 허용하지 않음, 해당 컬럼에 반드시 값이 기록되어야 하는 경우 사용된다. NULL값이 입력되면 행자체를 삽입하지않는다.
+         UNIQUE : 중복된 값을 허용하지 않음 , 
+         CHECK : 저장가능한 데이터의 범위나 조건을 지정하여 설정한 값만 허용한다,
+         PRIMARY KEY : NULL과 중복 값을 허용하지 않음(컬럼의 고유 식별자로 사용하기 위해),
+         FOREIGN KEY : 참조되는 테이블의 컬럼의 값이 존재하면 허용
         
         [표현법]
             1) 컬럼 레벨
@@ -129,13 +136,13 @@ SELECT * FROM MEMBER;
 
 DROP TABLE MEMBER;
 CREATE TABLE MEMBER (
-    MEMBER_ID VARCHAR2(20) NOT NULL,
+    MEMBER_ID VARCHAR2(20) NOT NULL, --VARCHAR2 가변형 컬럼에 사용,,, CAHR은 고정형으로 사용
     MEMBER_PWD VARCHAR2(20) NOT NULL,
     MEMBER_NAME VARCHAR2(20) NOT NULL,
     MEMBER_DATE DATE DEFAULT SYSDATE
 );
 
--- NOT NULL 제약 조건에 위배되어 오류 발생
+-- NOT NULL 제약 조건에 위배되어 <<오류 발생>>
 INSERT INTO MEMBER VALUES(NULL, NULL, NULL, NULL);
 
 -- NOT NULL 제약 조건이 걸려있는 컬럼에는 반드시 값이 있어야 한다.
@@ -144,7 +151,7 @@ INSERT INTO MEMBER VALUES('USER2', '1234', '길동이', DEFAULT);
 DESC MEMBER;
 SELECT * FROM MEMBER;
 
-/*
+/* ------------------------------------1020 여기까지함
     <UNIQUE 제약조건>
         컬럼의 입력 값에 중복 값을 제한하는 제약조건이다.
         데이터를 삽입/수정 시 기존에 있는 데이터 값 중에 중복 값이 있을 경우 삽입/수정되지 않는다.
@@ -160,7 +167,7 @@ SELECT * FROM MEMBER;
 DROP TABLE MEMBER;
 
 CREATE TABLE MEMBER (
-    MEMBER_ID VARCHAR2(20) NOT NULL UNIQUE,
+    MEMBER_ID VARCHAR2(20) NOT NULL UNIQUE, 
     MEMBER_PWD VARCHAR2(20) NOT NULL,
     MEMBER_NAME VARCHAR2(20) NOT NULL,
     MEMBER_DATE DATE DEFAULT SYSDATE
