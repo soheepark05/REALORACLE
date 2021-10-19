@@ -308,18 +308,22 @@ FROM EMPLOYEE
 WHERE DEPT_CODE = 'D5' AND JOB_CODE = 'J5';
 
 -- 각각 단일행 서브 쿼리로 작성
-SELECT EMP_NAME, DEPT_CODE, JOB_CODE
-FROM EMPLOYEE
-WHERE DEPT_CODE = (
-    SELECT DEPT_CODE -- 단일행 서브 쿼리
+-- select * from employee; 
+-- 여기서부터 ....
+SELECT EMP_NAME, DEPT_CODE, JOB_CODE       -- selelct 문 적어서 직원이름 회사코드 , 잡코드 불러오고
+FROM EMPLOYEE               -- emp 테이블
+WHERE DEPT_CODE = (             -- 조건 dept_code(부서코드) 가  '하이유'와 같은 부서코드여야하니까.
+    SELECT DEPT_CODE -- 단일행 서브 쿼리       
     FROM EMPLOYEE
     WHERE EMP_NAME = '하이유'
 )
-AND JOB_CODE = (
+AND JOB_CODE = (        --조건 job_code(부서코드) 가  '하이유'와 같은 부서코드여야하니까.
     SELECT JOB_CODE  -- 단일행 서브 쿼리
     FROM EMPLOYEE
     WHERE EMP_NAME = '하이유'
 );
+
+-- 여기까지인데
 
 -- 다중열 서브 쿼리를 사용해서 하나의 쿼리로 작성
 SELECT EMP_NAME, DEPT_CODE, JOB_CODE
@@ -366,20 +370,23 @@ WHERE (JOB_CODE, MANAGER_ID) IN (
     <다중행 다중열 서브 쿼리>
         서브 쿼리의 조회 결과값이 여러 행, 여러 열일 경우
 */
+select * from employee;
+
 -- 1. 각 직급별로 최소 급여를 받는 사원들의 사번, 이름, 직급 코드, 급여 조회
 -- 각 직급별 최소 급여 조회
 SELECT JOB_CODE, MIN(SALARY)
 FROM EMPLOYEE
-GROUP BY JOB_CODE; 
+GROUP BY JOB_CODE;  -- group by 로 직급별로 정리함.
+
 
 -- 각 직급별 최소 급여를 받는 사원들의 사번, 이름, 직급 코드, 급여 조회
-SELECT EMP_ID, EMP_NAME, JOB_CODE, SALARY
+SELECT EMP_ID as 사번 , EMP_NAME as 이름 , JOB_CODE as 직급코드 , SALARY as 급여
 FROM EMPLOYEE
 WHERE JOB_CODE = 'J2' AND SALARY = 3700000
    OR JOB_CODE = 'J7' AND SALARY = 1380000
    OR JOB_CODE = 'J3' AND SALARY = 3400000;
 
-SELECT EMP_ID, EMP_NAME, JOB_CODE, SALARY
+SELECT EMP_ID as 사번 , EMP_NAME, JOB_CODE, SALARY
 FROM EMPLOYEE
 WHERE (JOB_CODE, SALARY) IN (('J2', 3700000), ('J3', 3400000), ('J7', 1380000));
 
@@ -468,7 +475,7 @@ WHERE ROWNUM <= 3;
     <RANK 함수>
         [표현법]
             RANK() OVER(정렬 기준) / DENSE_RANK() OVER(정렬 기준)
-        RANK() OVER(정렬 기준)       : 동일한 순위 이후의 등수를 동일한 인원수만큼 건너뛰고 순위를 계산한다. (ex. 공동 1위가 2명이명 다음 순위는 3위)
+        RANK() OVER(정렬 기준)       : 동일한 순위 이후의 등수를 동일한 인원수만큼 건너뛰고 순위를 계산한다. (ex. 공동 1위가 2명이명 다음 순위는 3위) : 즉 공동 1위 -- 공동 3위 
         DENSE_RANK() OVER(정렬 기준) : 동일한 순위 이후의 등수를 무조건 1씩 증가한다. (ex. 공동 1위가 2명이면 다음 순위는 2위 )
 */
 -- 사원별 급여가 높은 순서대로 순위를 매겨서 순위, 사원명, 급여 조회
@@ -479,7 +486,7 @@ FROM EMPLOYEE;
 -- 공동 19위 2명 뒤에 순위는 20위
 SELECT DENSE_RANK() OVER(ORDER BY SALARY DESC) AS "RANK" ,EMP_NAME, SALARY
 FROM EMPLOYEE;
-
+ 
 -- 상위 5명만 조회
 SELECT RANK() OVER(ORDER BY SALARY DESC) AS "RANK" ,EMP_NAME, SALARY
 FROM EMPLOYEE
