@@ -1,3 +1,11 @@
+/* <        목   차       >
+    1. 트랜잭션 TRANSACTION , TCL
+
+*/
+
+
+
+
 /*
     <TCL(Transaction Control Language)>
         트랜잭션을 제어하는 언어이다.
